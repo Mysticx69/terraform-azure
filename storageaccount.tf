@@ -13,6 +13,9 @@ resource "azurerm_storage_account" "example" {
   }
 }
 
+##############################################################
+# Storage Share
+##############################################################
 resource "azurerm_storage_share" "example" {
   name                 = "fileshare-confidentiel"
   storage_account_name = azurerm_storage_account.example.name
