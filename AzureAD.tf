@@ -31,14 +31,14 @@ resource "azuread_user" "administratif" {
 }
 
 resource "azuread_group" "administratif_group" {
-  display_name       = "Administratif TF"
-  security_enabled   = true
-  owners             = [data.azuread_client_config.current.object_id]
-  types              = ["DynamicMembership"]
+  display_name     = "Administratif TF"
+  security_enabled = true
+  owners           = [data.azuread_client_config.current.object_id]
+  types            = ["DynamicMembership"]
 
   dynamic_membership {
     enabled = true
-    rule = "user.department -eq \"Administratif\""
+    rule    = "user.department -eq \"Administratif\""
   }
 }
 

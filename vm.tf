@@ -16,6 +16,7 @@ resource "azurerm_public_ip" "bastion_ip" {
 # Network Interface => system subnet
 ##############################################################
 resource "azurerm_network_interface" "mainsystem" {
+  # checkov:skip=CKV_AZURE_119: Ensure that Network Interfaces don't use public IPs => Needed
   name                = "bastion-nic"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -48,13 +49,14 @@ resource "azurerm_network_interface" "mainconfidentiel" {
 # Virtual Machine Windows Server 2019 => System subnet
 ##############################################################
 resource "azurerm_virtual_machine" "bastion_vm" {
-  name                  = "Bastion-vm"
-  location              = azurerm_resource_group.rg.location
-  resource_group_name   = azurerm_resource_group.rg.name
-  network_interface_ids = [azurerm_network_interface.mainsystem.id]
-  vm_size               = "Standard_DS1_v2"
-  delete_os_disk_on_termination = true
+  name                             = "Bastion-vm"
+  location                         = azurerm_resource_group.rg.location
+  resource_group_name              = azurerm_resource_group.rg.name
+  network_interface_ids            = [azurerm_network_interface.mainsystem.id]
+  vm_size                          = "Standard_DS1_v2"
+  delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
+
 
   storage_image_reference {
     publisher = "MicrosoftWindowsServer"
@@ -69,11 +71,11 @@ resource "azurerm_virtual_machine" "bastion_vm" {
     admin_password = "Password1234!"
   }
 
-   os_profile_windows_config {
+  os_profile_windows_config {
     enable_automatic_upgrades = false
   }
 
-   storage_os_disk {
+  storage_os_disk {
     name              = "myosdisk1"
     caching           = "ReadWrite"
     create_option     = "FromImage"
@@ -89,12 +91,12 @@ resource "azurerm_virtual_machine" "bastion_vm" {
 # Virtual Machine Windows Server 2019 => confidentiel subnet
 ##############################################################
 resource "azurerm_virtual_machine" "vmconfidentiel" {
-  name                  = "WINSERV2019"
-  location              = azurerm_resource_group.rg_confidentiel.location
-  resource_group_name   = azurerm_resource_group.rg_confidentiel.name
-  network_interface_ids = [azurerm_network_interface.mainconfidentiel.id]
-  vm_size               = "Standard_DS1_v2"
-  delete_os_disk_on_termination = true
+  name                             = "WINSERV2019"
+  location                         = azurerm_resource_group.rg_confidentiel.location
+  resource_group_name              = azurerm_resource_group.rg_confidentiel.name
+  network_interface_ids            = [azurerm_network_interface.mainconfidentiel.id]
+  vm_size                          = "Standard_DS1_v2"
+  delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
 
   storage_image_reference {
@@ -114,7 +116,7 @@ resource "azurerm_virtual_machine" "vmconfidentiel" {
     enable_automatic_upgrades = false
   }
 
-   storage_os_disk {
+  storage_os_disk {
     name              = "myosdisk1"
     caching           = "ReadWrite"
     create_option     = "FromImage"
