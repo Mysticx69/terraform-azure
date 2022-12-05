@@ -25,10 +25,13 @@ provider "azuread" {
 
 }
 
+##############################################################
+# Fetched Data
+##############################################################
 data "azuread_domains" "default" {
   only_initial = true
-
 }
 
 data "azuread_client_config" "current" {}
 data "azurerm_client_config" "current" {}
+data "azurerm_subscription" "primary" {}
