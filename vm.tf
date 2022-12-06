@@ -62,7 +62,7 @@ resource "azurerm_virtual_machine" "bastion_vm" {
   location                         = azurerm_resource_group.rg_system.location
   resource_group_name              = azurerm_resource_group.rg_system.name
   network_interface_ids            = [azurerm_network_interface.mainsystem.id]
-  vm_size                          = "Standard_DS1_v2"
+  vm_size                          = "Standard_B2s"
   delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
 
@@ -118,7 +118,7 @@ resource "azurerm_virtual_machine" "vmconfidentiel" {
   location                         = azurerm_resource_group.rg_confidentiel.location
   resource_group_name              = azurerm_resource_group.rg_confidentiel.name
   network_interface_ids            = [azurerm_network_interface.mainconfidentiel.id]
-  vm_size                          = "Standard_DS1_v2"
+  vm_size                          = "Standard_B2s"
   delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
 
