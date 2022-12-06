@@ -12,7 +12,7 @@ resource "azurerm_policy_definition" "location" {
     "if": {
       "not": {
         "field": "location",
-        "in": "["westeurope", "northeurope"]"
+        "in": ["westeurope", "northeurope"]
       }
     },
     "then": {
