@@ -79,4 +79,13 @@ resource "azurerm_storage_share" "confidentiel_ss" {
   name                 = "fileshare-confidentiel"
   storage_account_name = azurerm_storage_account.confidentiel_sg.name
   quota                = 250
+  acl {
+    id = "MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI"
+
+    access_policy {
+      permissions = "rwdl"
+      start       = "2023-07-02T09:38:21.0000000Z"
+      expiry      = "2023-07-02T10:38:21.0000000Z"
+    }
+  }
 }
