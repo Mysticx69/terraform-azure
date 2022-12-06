@@ -32,7 +32,7 @@ resource "azurerm_backup_policy_vm" "rvp" {
 # Apply Backup On Confidential VM
 ##############################################################
 data "azurerm_virtual_machine" "vmconf" {
-  name                = "WINSERV2019"
+  name                = "hostname"
   resource_group_name = azurerm_resource_group.rg_confidentiel.name
 }
 
