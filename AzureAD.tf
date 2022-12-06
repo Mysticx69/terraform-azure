@@ -63,7 +63,7 @@ resource "azuread_group" "administratif" {
 ##############################################################
 # Assign Contributor Role On Subscription For Administratif Group
 ##############################################################
-resource "azurerm_role_assignment" "owners" {
+resource "azurerm_role_assignment" "contributors" {
   scope                = data.azurerm_subscription.primary.id
   role_definition_name = "Contributor"
   principal_id         = azuread_group.administratif.object_id
