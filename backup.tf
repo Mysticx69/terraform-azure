@@ -9,10 +9,15 @@ resource "azurerm_backup_policy_vm" "rvp" {
   name                = "recovery-vault-policy"
   resource_group_name = azurerm_resource_group.rg_confidentiel.name
   recovery_vault_name = azurerm_recovery_services_vault.rsv.name
+  timezone            = "UTC+1"
 
   backup {
     frequency = "Daily"
     time      = "23:00"
+  }
+
+  retention_daily {
+    count = 10
   }
 }
 
