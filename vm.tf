@@ -7,9 +7,9 @@ resource "azurerm_public_ip" "bastion_ip" {
   location            = azurerm_resource_group.rg_system.location
   allocation_method   = "Static"
 
-  tags = {
-    Terraform = "True"
-  }
+  tags = merge(local.tags, {
+    description = "PublicIP For Bastion VM"
+  })
 }
 
 ##############################################################
@@ -27,6 +27,10 @@ resource "azurerm_network_interface" "mainsystem" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.bastion_ip.id
   }
+
+  tags = merge(local.tags, {
+    description = "Main Interface For Bastion Vm"
+  })
 }
 
 ##############################################################
@@ -42,6 +46,10 @@ resource "azurerm_network_interface" "mainconfidentiel" {
     subnet_id                     = azurerm_subnet.confidentiel1.id
     private_ip_address_allocation = "Dynamic"
   }
+
+  tags = merge(local.tags, {
+    description = "Main Interface For Confidentiel Vm"
+  })
 }
 
 
@@ -49,6 +57,7 @@ resource "azurerm_network_interface" "mainconfidentiel" {
 # Virtual Machine Windows Server 2019 => System subnet
 ##############################################################
 resource "azurerm_virtual_machine" "bastion_vm" {
+  # checkov:skip=CKV2_AZURE_12: Backup => TODO
   name                             = "Bastion-vm"
   location                         = azurerm_resource_group.rg_system.location
   resource_group_name              = azurerm_resource_group.rg_system.name
@@ -82,15 +91,28 @@ resource "azurerm_virtual_machine" "bastion_vm" {
     managed_disk_type = "Standard_LRS"
   }
 
-  tags = {
-    Terraform = "True"
-  }
+  tags = merge(local.tags, {
+    name = "Bastion VM"
+  })
+}
+
+##############################################################
+# Virtual Machine Extension
+##############################################################
+resource "azurerm_virtual_machine_extension" "extension_bastion_vm" {
+  name                       = "bastion_vm"
+  virtual_machine_id         = azurerm_virtual_machine.bastion_vm.id
+  publisher                  = "Microsoft.Azure.Security"
+  type                       = "IaaSAntimalware"
+  type_handler_version       = "2.0"
+  auto_upgrade_minor_version = true
 }
 
 ##############################################################
 # Virtual Machine Windows Server 2019 => confidentiel subnet
 ##############################################################
 resource "azurerm_virtual_machine" "vmconfidentiel" {
+  # checkov:skip=CKV2_AZURE_12: Backup => TODO
   name                             = "WINSERV2019"
   location                         = azurerm_resource_group.rg_confidentiel.location
   resource_group_name              = azurerm_resource_group.rg_confidentiel.name
@@ -123,7 +145,19 @@ resource "azurerm_virtual_machine" "vmconfidentiel" {
     managed_disk_type = "Standard_LRS"
   }
 
-  tags = {
-    Terraform = "True"
-  }
+  tags = merge(local.tags, {
+    name = "Confidentiel VM"
+  })
+}
+
+##############################################################
+# Virtual Machine Extension
+##############################################################
+resource "azurerm_virtual_machine_extension" "extension_vmconfidentiel" {
+  name                       = "vmconfidentiel"
+  virtual_machine_id         = azurerm_virtual_machine.vmconfidentiel.id
+  publisher                  = "Microsoft.Azure.Security"
+  type                       = "IaaSAntimalware"
+  type_handler_version       = "2.0"
+  auto_upgrade_minor_version = true
 }

@@ -18,9 +18,7 @@ resource "azurerm_network_security_group" "AllowSSHRDPInbound" {
     destination_address_prefix = "*"
   }
 
-  tags = {
-    Terraform = "True"
-  }
+  tags = local.tags
 }
 
 ##############################################################
@@ -31,10 +29,8 @@ resource "azurerm_virtual_network" "system" {
   location            = azurerm_resource_group.rg_system.location
   resource_group_name = azurerm_resource_group.rg_system.name
   address_space       = ["10.200.0.0/16"]
+  tags                = local.tags
 
-  tags = {
-    Terraform = "True"
-  }
 }
 
 ##############################################################
@@ -73,10 +69,7 @@ resource "azurerm_virtual_network" "confidentiel" {
   location            = azurerm_resource_group.rg_confidentiel.location
   resource_group_name = azurerm_resource_group.rg_confidentiel.name
   address_space       = ["10.201.0.0/16"]
-
-  tags = {
-    Terraform = "True"
-  }
+  tags                = local.tags
 }
 
 ##############################################################
@@ -98,10 +91,3 @@ resource "azurerm_subnet" "confidentiel2" {
   virtual_network_name = azurerm_virtual_network.confidentiel.name
   address_prefixes     = ["10.201.1.0/24"]
 }
-
-
-
-
-
-
-
