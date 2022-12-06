@@ -12,20 +12,25 @@ resource "azurerm_key_vault" "kv_system" {
   sku_name                    = "standard"
 
   network_acls {
-    default_action = "Deny"
-    bypass         = "AzureServices"
+    default_action             = "Deny"
+    bypass                     = "AzureServices"
+    virtual_network_subnet_ids = [azurerm_subnet.system1.id, azurerm_subnet.system2.id]
   }
 
   access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
+    tenant_id      = data.azurerm_client_config.current.tenant_id
+    object_id      = data.azurerm_client_config.current.object_id
+    application_id = data.azuread_client_config.current.id
 
     key_permissions = [
       "Get",
+      "Create",
+      "Delete"
     ]
 
     secret_permissions = [
       "Get",
+      "Delete"
     ]
 
     storage_permissions = [
@@ -52,20 +57,25 @@ resource "azurerm_key_vault" "kv_confidentiel" {
   sku_name                    = "standard"
 
   network_acls {
-    default_action = "Deny"
-    bypass         = "AzureServices"
+    default_action             = "Deny"
+    bypass                     = "AzureServices"
+    virtual_network_subnet_ids = [azurerm_subnet.confidentiel1.id]
   }
 
   access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
+    tenant_id      = data.azurerm_client_config.current.tenant_id
+    object_id      = data.azurerm_client_config.current.object_id
+    application_id = data.azuread_client_config.current.id
 
     key_permissions = [
       "Get",
+      "Create",
+      "Delete"
     ]
 
     secret_permissions = [
       "Get",
+      "Delete"
     ]
 
     storage_permissions = [
