@@ -105,7 +105,7 @@ resource "azurerm_virtual_network_peering" "vnetsystemtoconfidentiel" {
 ##############################################################
 # VNET Peering Confidentiel > System
 ##############################################################
-resource "azurerm_virtual_network_peering" "vnetsystemtoconfidentiel" {
+resource "azurerm_virtual_network_peering" "vnetconfidentieltosystem" {
   name                      = "vnet-system-to-confidentiel"
   resource_group_name       = azurerm_resource_group.rg_confidentiel.name
   virtual_network_name      = azurerm_virtual_network.confidentiel.name
