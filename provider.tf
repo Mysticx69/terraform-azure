@@ -2,6 +2,15 @@
 # Configure Providers
 ##############################################################
 terraform {
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "mysticx"
+
+    workspaces {
+      name = "azure-cpe"
+    }
+  }
+
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
