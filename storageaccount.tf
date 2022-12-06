@@ -21,7 +21,6 @@ resource "azurerm_storage_account_customer_managed_key" "managed_key_good" {
   storage_account_id = azurerm_storage_account.confidentiel_sg.id
   key_vault_id       = azurerm_key_vault.kv_confidentiel.id
   key_name           = azurerm_key_vault_key.kvk.name
-  key_version        = "1"
 }
 
 ##############################################################
@@ -36,7 +35,7 @@ resource "azurerm_storage_account" "confidentiel_sg" {
   min_tls_version          = "TLS1_2"
 
   identity {
-    type = "SystemAssigned"
+    type = "UserAssigned"
   }
 
   queue_properties {
