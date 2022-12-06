@@ -3,8 +3,8 @@
 ##############################################################
 resource "azurerm_network_security_group" "AllowSSHRDPInbound" {
   name                = "AllowSSH_RDP_Inbound"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg_system.location
+  resource_group_name = azurerm_resource_group.rg_system.name
 
   security_rule {
     name                       = "AllowSSH"
@@ -28,8 +28,8 @@ resource "azurerm_network_security_group" "AllowSSHRDPInbound" {
 ##############################################################
 resource "azurerm_virtual_network" "system" {
   name                = "SuperNet-System-TF"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg_system.location
+  resource_group_name = azurerm_resource_group.rg_system.name
   address_space       = ["10.200.0.0/16"]
 
   tags = {
@@ -42,7 +42,7 @@ resource "azurerm_virtual_network" "system" {
 ##############################################################
 resource "azurerm_subnet" "system1" {
   name                 = "subnet-system-1-TF"
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = azurerm_resource_group.rg_system.name
   virtual_network_name = azurerm_virtual_network.system.name
   address_prefixes     = ["10.200.0.0/24"]
 }
@@ -52,7 +52,7 @@ resource "azurerm_subnet" "system1" {
 ##############################################################
 resource "azurerm_subnet" "system2" {
   name                 = "subnet-system-2-TF"
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = azurerm_resource_group.rg_system.name
   virtual_network_name = azurerm_virtual_network.system.name
   address_prefixes     = ["10.200.1.0/24"]
 }

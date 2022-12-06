@@ -3,8 +3,8 @@
 ##############################################################
 resource "azurerm_public_ip" "bastion_ip" {
   name                = "PublicIpBastion"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg_system.name
+  location            = azurerm_resource_group.rg_system_system_system.location
   allocation_method   = "Static"
 
   tags = {
@@ -18,8 +18,8 @@ resource "azurerm_public_ip" "bastion_ip" {
 resource "azurerm_network_interface" "mainsystem" {
   # checkov:skip=CKV_AZURE_119: Ensure that Network Interfaces don't use public IPs => Needed
   name                = "bastion-nic"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg_system.location
+  resource_group_name = azurerm_resource_group.rg_system.name
 
   ip_configuration {
     name                          = "networconfig-system"
@@ -50,8 +50,8 @@ resource "azurerm_network_interface" "mainconfidentiel" {
 ##############################################################
 resource "azurerm_virtual_machine" "bastion_vm" {
   name                             = "Bastion-vm"
-  location                         = azurerm_resource_group.rg.location
-  resource_group_name              = azurerm_resource_group.rg.name
+  location                         = azurerm_resource_group.rg_system.location
+  resource_group_name              = azurerm_resource_group.rg_system.name
   network_interface_ids            = [azurerm_network_interface.mainsystem.id]
   vm_size                          = "Standard_DS1_v2"
   delete_os_disk_on_termination    = true
