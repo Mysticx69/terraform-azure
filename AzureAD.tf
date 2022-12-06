@@ -6,10 +6,17 @@
 # IT Group
 ##############################################################
 resource "azuread_group" "it" {
-  display_name       = "IT"
-  owners             = [data.azuread_client_config.current.object_id]
-  security_enabled   = true
-  assignable_to_role = true
+  display_name            = "IT"
+  description             = "Group for admins users. All rights on Azure AD and Owner role on subscription"
+  owners                  = [data.azuread_client_config.current.object_id]
+  prevent_duplicate_names = true
+  security_enabled        = true
+  assignable_to_role      = true
+
+
+  members = [azuread_user.jcive.object_id,
+    azuread_user.scroche.object_id,
+  azuread_user.hbonisseur.object_id]
 }
 
 ##############################################################
@@ -40,15 +47,26 @@ resource "azurerm_role_assignment" "owners" {
 # Administratif Group
 ##############################################################
 resource "azuread_group" "administratif" {
-  display_name     = "Administratif TF"
-  security_enabled = true
-  owners           = [data.azuread_client_config.current.object_id]
-  types            = ["DynamicMembership"]
+  display_name            = "Administratif"
+  description             = "Group for adminitratif users. No rights on Azure AD and Contributor role on subscription"
+  security_enabled        = true
+  prevent_duplicate_names = true
+  owners                  = [data.azuread_client_config.current.object_id]
+  types                   = ["DynamicMembership"]
 
   dynamic_membership {
     enabled = true
     rule    = "user.department -eq \"Administratif\""
   }
+}
+
+##############################################################
+# Assign Contributor Role On Subscription For Administratif Group
+##############################################################
+resource "azurerm_role_assignment" "owners" {
+  scope                = data.azurerm_subscription.primary.id
+  role_definition_name = "Contributor"
+  principal_id         = azuread_group.administratif.object_id
 }
 
 ##############################################################
