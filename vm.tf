@@ -121,7 +121,7 @@ resource "azurerm_virtual_machine" "vmconfidentiel" {
   vm_size                          = "Standard_DS1_v2"
   delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
-  provision_vm_agent               = true
+
 
   storage_image_reference {
     publisher = "MicrosoftWindowsServer"
@@ -138,6 +138,7 @@ resource "azurerm_virtual_machine" "vmconfidentiel" {
 
   os_profile_windows_config {
     enable_automatic_upgrades = false
+    provision_vm_agent        = true
   }
 
   storage_os_disk {
