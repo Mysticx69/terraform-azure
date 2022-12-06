@@ -63,7 +63,7 @@ resource "azurerm_key_vault" "kv_confidentiel" {
     default_action             = "Deny"
     bypass                     = "AzureServices"
     virtual_network_subnet_ids = [azurerm_subnet.confidentiel1.id]
-    ip_rules                   = ["44.204.95.165"]
+    ip_rules                   = ["44.204.245.4"]
   }
 
   access_policy {
