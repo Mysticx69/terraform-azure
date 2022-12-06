@@ -2,7 +2,7 @@
 # Keyvault For System
 ##############################################################
 resource "azurerm_key_vault" "kv_system" {
-  name                        = "keyvaultsystemcpe"
+  name                        = "systemcpekeyvault"
   location                    = azurerm_resource_group.rg_system.location
   resource_group_name         = azurerm_resource_group.rg_system.name
   enabled_for_disk_encryption = true
@@ -50,7 +50,7 @@ resource "azurerm_key_vault" "kv_system" {
 # Keyvault For Confidentiel
 ##############################################################
 resource "azurerm_key_vault" "kv_confidentiel" {
-  name                        = "keyvaultconfidentielcpe"
+  name                        = "confidentielcpekeyvault"
   location                    = azurerm_resource_group.rg_confidentiel.location
   resource_group_name         = azurerm_resource_group.rg_confidentiel.name
   enabled_for_disk_encryption = true
