@@ -1,5 +1,5 @@
 ##############################################################
-# Resource Group
+# Resource Groups
 ##############################################################
 resource "azurerm_resource_group" "rg_system" {
   name     = "RG_SYSTEM_TERRAFORM"

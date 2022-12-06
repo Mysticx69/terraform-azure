@@ -1,3 +1,6 @@
+##############################################################
+# Policy Definition For Resources Deployment Locations
+##############################################################
 resource "azurerm_policy_definition" "location" {
   name         = "only-deploy-in-westeurope-northeuropê"
   policy_type  = "Custom"
@@ -19,6 +22,9 @@ resource "azurerm_policy_definition" "location" {
 POLICY_RULE
 }
 
+##############################################################
+# Policy Assignement On Subscription
+##############################################################
 resource "azurerm_subscription_policy_assignment" "spa" {
   name                 = "locations"
   policy_definition_id = azurerm_policy_definition.location.id
