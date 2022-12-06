@@ -1,18 +1,18 @@
 ##############################################################
 # Key Vault Key For Storage Account
 ##############################################################
-resource "azurerm_key_vault_key" "kvk1" {
-  name            = "key-confidentielsg"
-  key_vault_id    = azurerm_key_vault.kv_confidentiel.id
-  key_type        = "RSA-HSM"
-  key_size        = 2048
-  key_opts        = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
-  expiration_date = "2023-12-06T20:00:00Z"
+# resource "azurerm_key_vault_key" "kvk1" {
+#   name            = "key-confidentielsg"
+#   key_vault_id    = azurerm_key_vault.kv_confidentiel.id
+#   key_type        = "RSA-HSM"
+#   key_size        = 2048
+#   key_opts        = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
+#   expiration_date = "2023-12-06T20:00:00Z"
 
-  tags = merge(local.tags, {
-    description = "Key Vault Key For Storage Account"
-  })
-}
+#   tags = merge(local.tags, {
+#     description = "Key Vault Key For Storage Account"
+#   })
+# }
 
 ##############################################################
 # Storage Account Customer Managed Key
