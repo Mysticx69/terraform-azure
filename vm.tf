@@ -105,24 +105,24 @@ resource "azurerm_virtual_machine_extension" "extension_bastion_vm" {
   virtual_machine_id         = azurerm_virtual_machine.bastion_vm.id
   publisher                  = "Microsoft.Azure.Security"
   type                       = "IaaSAntimalware"
-  type_handler_version       = "2.0"
+  type_handler_version       = "1.1"
   auto_upgrade_minor_version = true
   settings                   = <<SETTINGS
-{
-  "AntimalwareEnabled": true,
-  "RealtimeProtectionEnabled": "true",
-  "ScheduledScanSettings": {
-  "isEnabled": "true",
-  "day": "1",
-  "time": "120",
-  "scanType": "Quick"
-},
-  "Exclusions": {
-  "Extensions": "",
-  "Paths": "",
-  "Processes": ""
-}
-}
+    {
+        "AntimalwareEnabled": true,
+        "RealtimeProtectionEnabled": "true",
+        "ScheduledScanSettings": {
+            "isEnabled": "true",
+            "day": "1",
+            "time": "120",
+            "scanType": "Quick"
+            },
+        "Exclusions": {
+            "Extensions": "",
+            "Paths": "",
+            "Processes": ""
+            }
+    }
 SETTINGS
 }
 
@@ -179,23 +179,23 @@ resource "azurerm_virtual_machine_extension" "extension_vmconfidentiel" {
   virtual_machine_id         = azurerm_virtual_machine.vmconfidentiel.id
   publisher                  = "Microsoft.Azure.Security"
   type                       = "IaaSAntimalware"
-  type_handler_version       = "2.0"
+  type_handler_version       = "1.1"
   auto_upgrade_minor_version = true
   settings                   = <<SETTINGS
-{
-  "AntimalwareEnabled": true,
-  "RealtimeProtectionEnabled": "true",
-  "ScheduledScanSettings": {
-  "isEnabled": "true",
-  "day": "1",
-  "time": "120",
-  "scanType": "Quick"
-},
-  "Exclusions": {
-  "Extensions": "",
-  "Paths": "",
-  "Processes": ""
-}
-}
+    {
+        "AntimalwareEnabled": true,
+        "RealtimeProtectionEnabled": "true",
+        "ScheduledScanSettings": {
+            "isEnabled": "true",
+            "day": "1",
+            "time": "120",
+            "scanType": "Quick"
+            },
+        "Exclusions": {
+            "Extensions": "",
+            "Paths": "",
+            "Processes": ""
+            }
+    }
 SETTINGS
 }
