@@ -96,18 +96,22 @@ resource "azurerm_subnet" "confidentiel2" {
 # VNET Peering System > Confidentiel
 ##############################################################
 resource "azurerm_virtual_network_peering" "vnetsystemtoconfidentiel" {
-  name                      = "vnet-system-to-confidentiel"
-  resource_group_name       = azurerm_resource_group.rg_system.name
-  virtual_network_name      = azurerm_virtual_network.system.name
-  remote_virtual_network_id = azurerm_virtual_network.confidentiel.id
+  name                         = "vnet-system-to-confidentiel"
+  resource_group_name          = azurerm_resource_group.rg_system.name
+  virtual_network_name         = azurerm_virtual_network.system.name
+  remote_virtual_network_id    = azurerm_virtual_network.confidentiel.id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = false
 }
 
 ##############################################################
 # VNET Peering Confidentiel > System
 ##############################################################
 resource "azurerm_virtual_network_peering" "vnetconfidentieltosystem" {
-  name                      = "vnet-system-to-confidentiel"
-  resource_group_name       = azurerm_resource_group.rg_confidentiel.name
-  virtual_network_name      = azurerm_virtual_network.confidentiel.name
-  remote_virtual_network_id = azurerm_virtual_network.system.id
+  name                         = "vnet-system-to-confidentiel"
+  resource_group_name          = azurerm_resource_group.rg_confidentiel.name
+  virtual_network_name         = azurerm_virtual_network.confidentiel.name
+  remote_virtual_network_id    = azurerm_virtual_network.system.id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = false
 }
