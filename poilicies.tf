@@ -2,7 +2,7 @@
 # Policy Definition For Resources Deployment Locations
 ##############################################################
 resource "azurerm_policy_definition" "location" {
-  name         = "only-deploy-in-westeurope-northeuropê"
+  name         = "only-deploy-in-westeurope-northeurope"
   policy_type  = "Custom"
   mode         = "All"
   display_name = "Allowed resource types"
