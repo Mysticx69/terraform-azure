@@ -35,6 +35,10 @@ resource "azurerm_storage_account" "confidentiel_sg" {
   account_replication_type = "GRS"
   min_tls_version          = "TLS1_2"
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   queue_properties {
 
     logging {
