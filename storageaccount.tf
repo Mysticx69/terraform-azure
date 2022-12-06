@@ -35,7 +35,7 @@ resource "azurerm_storage_account" "confidentiel_sg" {
   min_tls_version          = "TLS1_2"
 
   identity {
-    type = "UserAssigned"
+    type = "SystemAssigned"
   }
 
   queue_properties {
