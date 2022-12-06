@@ -41,6 +41,7 @@ resource "azurerm_subnet" "system1" {
   resource_group_name  = azurerm_resource_group.rg_system.name
   virtual_network_name = azurerm_virtual_network.system.name
   address_prefixes     = ["10.200.0.0/24"]
+  service_endpoints    = ["Microsoft.KeyVault"]
 }
 
 ##############################################################
@@ -51,6 +52,7 @@ resource "azurerm_subnet" "system2" {
   resource_group_name  = azurerm_resource_group.rg_system.name
   virtual_network_name = azurerm_virtual_network.system.name
   address_prefixes     = ["10.200.1.0/24"]
+  service_endpoints    = ["Microsoft.KeyVault"]
 }
 
 ##############################################################
@@ -80,6 +82,7 @@ resource "azurerm_subnet" "confidentiel1" {
   resource_group_name  = azurerm_resource_group.rg_confidentiel.name
   virtual_network_name = azurerm_virtual_network.confidentiel.name
   address_prefixes     = ["10.201.0.0/24"]
+  service_endpoints    = ["Microsoft.KeyVault", "Microsoft.Storage"]
 }
 
 ##############################################################
@@ -90,6 +93,7 @@ resource "azurerm_subnet" "confidentiel2" {
   resource_group_name  = azurerm_resource_group.rg_confidentiel.name
   virtual_network_name = azurerm_virtual_network.confidentiel.name
   address_prefixes     = ["10.201.1.0/24"]
+  service_endpoints    = ["Microsoft.KeyVault", "Microsoft.Storage"]
 }
 
 ##############################################################
