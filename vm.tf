@@ -66,7 +66,6 @@ resource "azurerm_virtual_machine" "bastion_vm" {
   delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
 
-
   storage_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
