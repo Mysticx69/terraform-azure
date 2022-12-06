@@ -8,6 +8,9 @@ resource "azurerm_key_vault_key" "kvk" {
   key_size        = 2048
   key_opts        = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
   expiration_date = "2023-12-06T20:00:00Z"
+  depends_on = [
+    azurerm_key_vault.kv_confidentiel
+  ]
 
   tags = merge(local.tags, {
     description = "Key Vault Key For Storage Account"
