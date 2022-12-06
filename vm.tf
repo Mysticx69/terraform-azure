@@ -57,7 +57,7 @@ resource "azurerm_network_interface" "mainconfidentiel" {
 # Virtual Machine Windows Server 2019 => System subnet
 ##############################################################
 resource "azurerm_virtual_machine" "bastion_vm" {
-  # checkov:skip=CKV2_AZURE_12: Backup => TODO
+  # checkov:skip=CKV2_AZURE_12: Backup => No need backup
   name                             = "Bastion-vm"
   location                         = azurerm_resource_group.rg_system.location
   resource_group_name              = azurerm_resource_group.rg_system.name
@@ -97,9 +97,9 @@ resource "azurerm_virtual_machine" "bastion_vm" {
   })
 }
 
-##############################################################
-# Virtual Machine Extension
-##############################################################
+# ##############################################################
+# # Virtual Machine Extension
+# ##############################################################
 resource "azurerm_virtual_machine_extension" "extension_bastion_vm" {
   name                       = "bastion_vm"
   virtual_machine_id         = azurerm_virtual_machine.bastion_vm.id
@@ -107,13 +107,31 @@ resource "azurerm_virtual_machine_extension" "extension_bastion_vm" {
   type                       = "IaaSAntimalware"
   type_handler_version       = "2.0"
   auto_upgrade_minor_version = true
+  settings                   = <<SETTINGS
+{
+  "AntimalwareEnabled": true,
+  "RealtimeProtectionEnabled": "true",
+  "ScheduledScanSettings": {
+  "isEnabled": "true",
+  "day": "1",
+  "time": "120",
+  "scanType": "Quick"
+},
+  "Exclusions": {
+  "Extensions": "",
+  "Paths": "",
+  "Processes": ""
 }
+}
+SETTINGS
+}
+
 
 ##############################################################
 # Virtual Machine Windows Server 2019 => confidentiel subnet
 ##############################################################
 resource "azurerm_virtual_machine" "vmconfidentiel" {
-  # checkov:skip=CKV2_AZURE_12: Backup => TODO
+  # checkov:skip=CKV2_AZURE_12: Backup configured in backup.tf
   name                             = "WINSERV2019"
   location                         = azurerm_resource_group.rg_confidentiel.location
   resource_group_name              = azurerm_resource_group.rg_confidentiel.name
@@ -153,9 +171,9 @@ resource "azurerm_virtual_machine" "vmconfidentiel" {
   })
 }
 
-##############################################################
-# Virtual Machine Extension
-##############################################################
+# ##############################################################
+# # Virtual Machine Extension
+# ##############################################################
 resource "azurerm_virtual_machine_extension" "extension_vmconfidentiel" {
   name                       = "vmconfidentiel"
   virtual_machine_id         = azurerm_virtual_machine.vmconfidentiel.id
@@ -163,4 +181,21 @@ resource "azurerm_virtual_machine_extension" "extension_vmconfidentiel" {
   type                       = "IaaSAntimalware"
   type_handler_version       = "2.0"
   auto_upgrade_minor_version = true
+  settings                   = <<SETTINGS
+{
+  "AntimalwareEnabled": true,
+  "RealtimeProtectionEnabled": "true",
+  "ScheduledScanSettings": {
+  "isEnabled": "true",
+  "day": "1",
+  "time": "120",
+  "scanType": "Quick"
+},
+  "Exclusions": {
+  "Extensions": "",
+  "Paths": "",
+  "Processes": ""
+}
+}
+SETTINGS
 }
