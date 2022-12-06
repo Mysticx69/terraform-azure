@@ -4,7 +4,7 @@
 resource "azurerm_public_ip" "bastion_ip" {
   name                = "PublicIpBastion"
   resource_group_name = azurerm_resource_group.rg_system.name
-  location            = azurerm_resource_group.rg_system_system_system.location
+  location            = azurerm_resource_group.rg_system.location
   allocation_method   = "Static"
 
   tags = {
