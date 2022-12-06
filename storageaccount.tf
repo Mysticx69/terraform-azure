@@ -1,8 +1,8 @@
 ##############################################################
 # Key Vault Key For Storage Account
 ##############################################################
-resource "azurerm_key_vault_key" "kvk1" {
-  name            = "key-confidentielsg"
+resource "azurerm_key_vault_key" "kvk" {
+  name            = "key-confidentiel-sg"
   key_vault_id    = azurerm_key_vault.kv_confidentiel.id
   key_type        = "RSA-HSM"
   key_size        = 2048
@@ -20,7 +20,7 @@ resource "azurerm_key_vault_key" "kvk1" {
 resource "azurerm_storage_account_customer_managed_key" "managed_key_good" {
   storage_account_id = azurerm_storage_account.confidentiel_sg.id
   key_vault_id       = azurerm_key_vault.kv_confidentiel.id
-  key_name           = azurerm_key_vault_key.kvk1.name
+  key_name           = azurerm_key_vault_key.kvk.name
   key_version        = "1"
 }
 
