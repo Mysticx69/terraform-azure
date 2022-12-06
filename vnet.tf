@@ -91,3 +91,23 @@ resource "azurerm_subnet" "confidentiel2" {
   virtual_network_name = azurerm_virtual_network.confidentiel.name
   address_prefixes     = ["10.201.1.0/24"]
 }
+
+##############################################################
+# VNET Peering System > Confidentiel
+##############################################################
+resource "azurerm_virtual_network_peering" "vnetsystemtoconfidentiel" {
+  name                      = "vnet-system-to-confidentiel"
+  resource_group_name       = azurerm_resource_group.rg_system.name
+  virtual_network_name      = azurerm_virtual_network.system.name
+  remote_virtual_network_id = azurerm_virtual_network.confidentiel.id
+}
+
+##############################################################
+# VNET Peering Confidentiel > System
+##############################################################
+resource "azurerm_virtual_network_peering" "vnetconfidentieltosystem" {
+  name                      = "vnet-system-to-confidentiel"
+  resource_group_name       = azurerm_resource_group.rg_confidentiel.name
+  virtual_network_name      = azurerm_virtual_network.confidentiel.name
+  remote_virtual_network_id = azurerm_virtual_network.system.id
+}
