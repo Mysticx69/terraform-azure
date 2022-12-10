@@ -17,7 +17,7 @@ resource "azurerm_key_vault" "kv_system" {
     default_action             = "Deny"
     bypass                     = "AzureServices"
     virtual_network_subnet_ids = [azurerm_subnet.system1.id, azurerm_subnet.system2.id]
-    ip_rules                   = ["172.147.76.8"]
+    ip_rules                   = ["0.0.0.0/0"]
   }
 
   access_policy {
@@ -68,7 +68,7 @@ resource "azurerm_key_vault" "kv_confidentiel" {
     default_action             = "Deny"
     bypass                     = "AzureServices"
     virtual_network_subnet_ids = [azurerm_subnet.confidentiel1.id]
-    ip_rules                   = ["172.147.76.8"]
+    ip_rules                   = ["0.0.0.0/0"]
   }
 
   access_policy {
