@@ -35,15 +35,13 @@ resource "azurerm_key_vault_access_policy" "system" {
 # Keyvault For System
 ##############################################################
 resource "azurerm_key_vault" "kv_system" {
-  # checkov:skip=CKV_AZURE_110: No purge protection needed
-  # checkov:skip=CKV_AZURE_42: No purge protection needed
-  name                        = "keyvaultcpesystem"
+  name                        = "keyvaultprivsystem"
   location                    = azurerm_resource_group.rg_system.location
   resource_group_name         = azurerm_resource_group.rg_system.name
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
-  purge_protection_enabled    = false
+  purge_protection_enabled    = true
   sku_name                    = "standard"
 
   network_acls {
@@ -63,15 +61,13 @@ resource "azurerm_key_vault" "kv_system" {
 # Keyvault For Confidentiel
 ##############################################################
 resource "azurerm_key_vault" "kv_confidentiel" {
-  # checkov:skip=CKV_AZURE_110: No purge protection needed
-  # checkov:skip=CKV_AZURE_42: No purge protection needed
-  name                        = "keyvaultcpeconfidentiel"
+  name                        = "keyvaultprivconfidentiel"
   location                    = azurerm_resource_group.rg_confidentiel.location
   resource_group_name         = azurerm_resource_group.rg_confidentiel.name
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
-  purge_protection_enabled    = false
+  purge_protection_enabled    = true
   sku_name                    = "standard"
 
   network_acls {
