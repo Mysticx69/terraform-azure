@@ -10,7 +10,7 @@ resource "azurerm_key_vault" "kv_system" {
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
-  purge_protection_enabled    = false
+  purge_protection_enabled    = true
   sku_name                    = "premium"
 
   network_acls {
@@ -61,7 +61,7 @@ resource "azurerm_key_vault" "kv_confidentiel" {
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
-  purge_protection_enabled    = false
+  purge_protection_enabled    = true
   sku_name                    = "premium"
 
   network_acls {
