@@ -7,8 +7,8 @@ resource "azurerm_key_vault_access_policy" "system" {
   object_id      = data.azurerm_client_config.current.object_id
   application_id = data.azurerm_client_config.current.client_id
 
-  key_permissions    = ["get", "create", "delete", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
-  secret_permissions = ["get"]
+  key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "Unwrapkey", "Wrapkey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
+  secret_permissions = ["Get"]
 }
 
 ##############################################################
@@ -20,8 +20,8 @@ resource "azurerm_key_vault_access_policy" "client" {
   object_id      = data.azurerm_client_config.current.object_id
   application_id = data.azurerm_client_config.current.client_id
 
-  key_permissions    = ["get", "create", "delete", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
-  secret_permissions = ["get"]
+  key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "Unwrapkey", "Wrapkey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
+  secret_permissions = ["Get"]
 }
 
 
