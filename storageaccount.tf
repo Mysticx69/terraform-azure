@@ -2,33 +2,28 @@
 # Key Vault Key For Storage Account
 ##############################################################
 resource "azurerm_key_vault_key" "kvk" {
-  # checkov:skip=CKV_AZURE_112: No HSM key
-  name            = "key-sg-keyvault"
+  # checkov:skip=CKV_AZURE_112:  No HSM
+  name            = "tfex-key"
   key_vault_id    = azurerm_key_vault.kv_confidentiel.id
   key_type        = "RSA"
   key_size        = 2048
   key_opts        = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
-  expiration_date = "2023-12-06T20:00:00Z"
+  expiration_date = "2023-12-30T20:00:00Z"
   depends_on = [
-    azurerm_key_vault.kv_confidentiel
+    azurerm_key_vault_access_policy.client
   ]
-
-  tags = merge(local.tags, {
-    description = "Key Vault Key For Storage Account"
-  })
 }
 
 ##############################################################
-# Storage Account Customer Managed Key
+# Key Vault Policy
 ##############################################################
-resource "azurerm_storage_account_customer_managed_key" "managed_key_good" {
-  storage_account_id = azurerm_storage_account.confidentiel_sg.id
-  key_vault_id       = azurerm_key_vault.kv_confidentiel.id
-  key_name           = azurerm_key_vault_key.kvk.name
-  depends_on = [
-    azurerm_key_vault.kv_confidentiel,
-    azurerm_key_vault_key.kvk
-  ]
+resource "azurerm_key_vault_access_policy" "client" {
+  key_vault_id = azurerm_key_vault.kv_confidentiel.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_client_config.current.object_id
+
+  key_permissions    = ["get", "create", "delete", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
+  secret_permissions = ["get"]
 }
 
 ##############################################################
@@ -82,6 +77,20 @@ resource "azurerm_storage_account" "confidentiel_sg" {
     description = "Confidentiel Storage Account"
   })
 }
+
+##############################################################
+# Storage Account Customer Managed Key
+##############################################################
+resource "azurerm_storage_account_customer_managed_key" "managed_key_good" {
+  storage_account_id = azurerm_storage_account.confidentiel_sg.id
+  key_vault_id       = azurerm_key_vault.kv_confidentiel.id
+  key_name           = azurerm_key_vault_key.kvk.name
+  depends_on = [
+    azurerm_key_vault.kv_confidentiel,
+    azurerm_key_vault_key.kvk
+  ]
+}
+
 
 ##############################################################
 # Storage Share
