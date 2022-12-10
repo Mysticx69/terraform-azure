@@ -35,15 +35,15 @@ resource "azurerm_key_vault_access_policy" "confidentiel" {
 # Keyvault For System
 ##############################################################
 resource "azurerm_key_vault" "kv_system" {
-  # checkov:skip=CKV_AZURE_110: ADD REASON
-  # checkov:skip=CKV_AZURE_42: ADD REASON
+  # checkov:skip=CKV_AZURE_110: No purge protection needed
+  # checkov:skip=CKV_AZURE_42: No purge protection needed
   name                        = "keyvaultcpesystem"
   location                    = azurerm_resource_group.rg_system.location
   resource_group_name         = azurerm_resource_group.rg_system.name
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
-  purge_protection_enabled    = true
+  purge_protection_enabled    = false
   sku_name                    = "standard"
 
   network_acls {
@@ -63,15 +63,15 @@ resource "azurerm_key_vault" "kv_system" {
 # Keyvault For Confidentiel
 ##############################################################
 resource "azurerm_key_vault" "kv_confidentiel" {
-  # checkov:skip=CKV_AZURE_110: ADD REASON
-  # checkov:skip=CKV_AZURE_42: ADD REASON
+  # checkov:skip=CKV_AZURE_110: No purge protection needed
+  # checkov:skip=CKV_AZURE_42: No purge protection needed
   name                        = "keyvaultcpeconfidentiel"
   location                    = azurerm_resource_group.rg_confidentiel.location
   resource_group_name         = azurerm_resource_group.rg_confidentiel.name
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
-  purge_protection_enabled    = true
+  purge_protection_enabled    = false
   sku_name                    = "standard"
 
   network_acls {
