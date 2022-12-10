@@ -68,7 +68,10 @@ resource "azurerm_storage_account" "confidentiel_sg" {
   }
 
   network_rules {
-    default_action = "Deny"
+    default_action             = "Deny"
+    bypass                     = ["AzureServices"]
+    ip_rules                   = ["0.0.0.0/0"]
+    virtual_network_subnet_ids = [azurerm_subnet.confidentiel1.id, azurerm_subnet.confidentiel2.id]
   }
 
   tags = merge(local.tags, {
