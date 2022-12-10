@@ -7,7 +7,7 @@ resource "azurerm_key_vault_access_policy" "system" {
   object_id      = data.azurerm_client_config.current.object_id
   application_id = data.azurerm_client_config.current.client_id
 
-  key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "Unwrapkey", "Wrapkey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
+  key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
   depends_on = [
     azurerm_key_vault.kv_system
@@ -23,7 +23,7 @@ resource "azurerm_key_vault_access_policy" "client" {
   object_id      = data.azurerm_client_config.current.object_id
   application_id = data.azurerm_client_config.current.client_id
 
-  key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "Unwrapkey", "Wrapkey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
+  key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
   depends_on = [
     azurerm_key_vault.kv_confidentiel
