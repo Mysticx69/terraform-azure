@@ -71,7 +71,7 @@ resource "azurerm_role_assignment" "contributors" {
 # IT Users
 ##############################################################
 resource "azuread_user" "jcive" {
-  user_principal_name   = "jcive@${data.azuread_domains.default.domains.0.domain_name}"
+  user_principal_name   = "jcive@${data.azuread_domains.default.domains[0].domain_name}"
   display_name          = "Jean Cive"
   city                  = "Lyon"
   company_name          = "CPE Lyon"
@@ -82,7 +82,7 @@ resource "azuread_user" "jcive" {
 }
 
 resource "azuread_user" "scroche" {
-  user_principal_name   = "scroche@${data.azuread_domains.default.domains.0.domain_name}"
+  user_principal_name   = "scroche@${data.azuread_domains.default.domains[0].domain_name}"
   display_name          = "Sarah Croche"
   city                  = "Lyon"
   company_name          = "CPE Lyon"
@@ -93,7 +93,7 @@ resource "azuread_user" "scroche" {
 }
 
 resource "azuread_user" "hbonisseur" {
-  user_principal_name   = "hbonisseur@${data.azuread_domains.default.domains.0.domain_name}"
+  user_principal_name   = "hbonisseur@${data.azuread_domains.default.domains[0].domain_name}"
   display_name          = "Hubert Bonisseur-Delabath"
   city                  = "Lyon"
   company_name          = "CPE Lyon"
@@ -108,7 +108,7 @@ resource "azuread_user" "hbonisseur" {
 # Administratif Users
 ##############################################################
 resource "azuread_user" "bafritt" {
-  user_principal_name   = "bafritt@${data.azuread_domains.default.domains.0.domain_name}"
+  user_principal_name   = "bafritt@${data.azuread_domains.default.domains[0].domain_name}"
   display_name          = "Barack Afritt"
   city                  = "Lyon"
   company_name          = "CPE Lyon"
@@ -119,7 +119,7 @@ resource "azuread_user" "bafritt" {
 }
 
 resource "azuread_user" "azauffray" {
-  user_principal_name   = "azauffray@${data.azuread_domains.default.domains.0.domain_name}"
+  user_principal_name   = "azauffray@${data.azuread_domains.default.domains[0].domain_name}"
   display_name          = "Annie-Zette Auffray"
   city                  = "Lyon"
   company_name          = "CPE Lyon"
