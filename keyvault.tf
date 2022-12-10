@@ -1,4 +1,31 @@
 ##############################################################
+# Key Vault Policy System
+##############################################################
+resource "azurerm_key_vault_access_policy" "system" {
+  key_vault_id   = azurerm_key_vault.kv_confidentiel.id
+  tenant_id      = data.azurerm_client_config.current.tenant_id
+  object_id      = data.azurerm_client_config.current.object_id
+  application_id = data.azurerm_client_config.current.client_id
+
+  key_permissions    = ["get", "create", "delete", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
+  secret_permissions = ["get"]
+}
+
+##############################################################
+# Key Vault Policy Confidentiel
+##############################################################
+resource "azurerm_key_vault_access_policy" "client" {
+  key_vault_id   = azurerm_key_vault.kv_system.id
+  tenant_id      = data.azurerm_client_config.current.tenant_id
+  object_id      = data.azurerm_client_config.current.object_id
+  application_id = data.azurerm_client_config.current.client_id
+
+  key_permissions    = ["get", "create", "delete", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
+  secret_permissions = ["get"]
+}
+
+
+##############################################################
 # Keyvault For System
 ##############################################################
 resource "azurerm_key_vault" "kv_system" {
@@ -18,31 +45,6 @@ resource "azurerm_key_vault" "kv_system" {
     ip_rules                   = ["0.0.0.0/0"]
   }
 
-  access_policy {
-    tenant_id      = data.azurerm_client_config.current.tenant_id
-    object_id      = data.azurerm_client_config.current.object_id
-    application_id = data.azurerm_client_config.current.client_id
-
-    key_permissions = [
-      "Get",
-      "Create",
-      "Delete",
-      "List",
-      "Recover",
-      "Restore"
-    ]
-
-    secret_permissions = [
-      "Get",
-      "Delete",
-      "List"
-    ]
-
-    storage_permissions = [
-      "Get",
-      "List"
-    ]
-  }
 
   tags = merge(local.tags, {
     name = "KeyVault System"
