@@ -9,6 +9,9 @@ resource "azurerm_key_vault_access_policy" "system" {
 
   key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "Unwrapkey", "Wrapkey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
+  depends_on = [
+    azurerm_key_vault.kv_system
+  ]
 }
 
 ##############################################################
@@ -22,6 +25,9 @@ resource "azurerm_key_vault_access_policy" "client" {
 
   key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "Unwrapkey", "Wrapkey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
+  depends_on = [
+    azurerm_key_vault.kv_confidentiel
+  ]
 }
 
 
