@@ -7,7 +7,7 @@ resource "azurerm_network_security_group" "AllowSSHRDPInbound" {
   resource_group_name = azurerm_resource_group.rg_system.name
 
   security_rule {
-    name                       = "AllowSSH"
+    name                       = "AllowSSH&RDP"
     priority                   = 100
     direction                  = "Inbound"
     access                     = "Allow"
