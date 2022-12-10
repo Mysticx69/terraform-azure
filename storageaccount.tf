@@ -87,7 +87,7 @@ resource "azurerm_storage_share" "confidentiel_ss" {
 
     access_policy {
       permissions = "rwdl"
-      start       = "2022-12-12T09:38:21.0000000Z"
+      start       = "2022-12-10T09:38:21.0000000Z"
       expiry      = "2023-07-02T10:38:21.0000000Z"
     }
   }
