@@ -73,12 +73,13 @@ resource "azurerm_key_vault" "kv_confidentiel" {
     tenant_id      = data.azurerm_client_config.current.tenant_id
     object_id      = data.azurerm_client_config.current.object_id
     application_id = data.azurerm_client_config.current.client_id
-
     key_permissions = [
       "Get",
       "Create",
+      "Delete",
       "List",
-      "Delete"
+      "Recover",
+      "Restore"
     ]
 
     secret_permissions = [
