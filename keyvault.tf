@@ -2,8 +2,6 @@
 # Keyvault For System
 ##############################################################
 resource "azurerm_key_vault" "kv_system" {
-  # checkov:skip=CKV_AZURE_110: No purge
-  # checkov:skip=CKV_AZURE_42: No recovery
   name                        = "keyvaultcpesystem"
   location                    = azurerm_resource_group.rg_system.location
   resource_group_name         = azurerm_resource_group.rg_system.name
@@ -11,7 +9,7 @@ resource "azurerm_key_vault" "kv_system" {
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
   purge_protection_enabled    = true
-  sku_name                    = "premium"
+  sku_name                    = "standard"
 
   network_acls {
     default_action             = "Deny"
@@ -53,8 +51,6 @@ resource "azurerm_key_vault" "kv_system" {
 # Keyvault For Confidentiel
 ##############################################################
 resource "azurerm_key_vault" "kv_confidentiel" {
-  # checkov:skip=CKV_AZURE_110: No purge
-  # checkov:skip=CKV_AZURE_42: No recovery
   name                        = "keyvaultcpeconfidentiel"
   location                    = azurerm_resource_group.rg_confidentiel.location
   resource_group_name         = azurerm_resource_group.rg_confidentiel.name
@@ -62,7 +58,7 @@ resource "azurerm_key_vault" "kv_confidentiel" {
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
   purge_protection_enabled    = true
-  sku_name                    = "premium"
+  sku_name                    = "standard"
 
   network_acls {
     default_action             = "Deny"

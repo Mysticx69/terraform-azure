@@ -2,9 +2,10 @@
 # Key Vault Key For Storage Account
 ##############################################################
 resource "azurerm_key_vault_key" "kvk" {
+  # checkov:skip=CKV_AZURE_112: No HSM key
   name            = "key-sg-keyvault"
   key_vault_id    = azurerm_key_vault.kv_confidentiel.id
-  key_type        = "RSA-HSM"
+  key_type        = "RSA"
   key_size        = 2048
   key_opts        = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
   expiration_date = "2023-12-06T20:00:00Z"
