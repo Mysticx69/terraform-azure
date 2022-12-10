@@ -35,6 +35,8 @@ resource "azurerm_key_vault_access_policy" "confidentiel" {
 # Keyvault For System
 ##############################################################
 resource "azurerm_key_vault" "kv_system" {
+  # checkov:skip=CKV_AZURE_110: ADD REASON
+  # checkov:skip=CKV_AZURE_42: ADD REASON
   name                        = "keyvaultcpesystem"
   location                    = azurerm_resource_group.rg_system.location
   resource_group_name         = azurerm_resource_group.rg_system.name
@@ -61,6 +63,8 @@ resource "azurerm_key_vault" "kv_system" {
 # Keyvault For Confidentiel
 ##############################################################
 resource "azurerm_key_vault" "kv_confidentiel" {
+  # checkov:skip=CKV_AZURE_110: ADD REASON
+  # checkov:skip=CKV_AZURE_42: ADD REASON
   name                        = "keyvaultcpeconfidentiel"
   location                    = azurerm_resource_group.rg_confidentiel.location
   resource_group_name         = azurerm_resource_group.rg_confidentiel.name
@@ -75,31 +79,6 @@ resource "azurerm_key_vault" "kv_confidentiel" {
     bypass                     = "AzureServices"
     virtual_network_subnet_ids = [azurerm_subnet.confidentiel1.id]
     ip_rules                   = ["0.0.0.0/0"]
-  }
-
-  access_policy {
-    tenant_id      = data.azurerm_client_config.current.tenant_id
-    object_id      = data.azurerm_client_config.current.object_id
-    application_id = data.azurerm_client_config.current.client_id
-    key_permissions = [
-      "Get",
-      "Create",
-      "Delete",
-      "List",
-      "Recover",
-      "Restore"
-    ]
-
-    secret_permissions = [
-      "Get",
-      "Delete",
-      "List"
-    ]
-
-    storage_permissions = [
-      "Get",
-      "List"
-    ]
   }
 
   tags = merge(local.tags, {

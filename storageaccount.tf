@@ -10,7 +10,7 @@ resource "azurerm_key_vault_key" "kvk" {
   key_opts        = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
   expiration_date = "2023-12-30T20:00:00Z"
   depends_on = [
-    azurerm_key_vault_access_policy.client
+    azurerm_key_vault_access_policy.confidentiel
   ]
 }
 
