@@ -116,7 +116,7 @@ resource "azurerm_key_vault_access_policy" "storage" {
 # Keyvault For System
 ##############################################################
 resource "azurerm_key_vault" "kv_system" {
-  name                        = "keyvaultprivsystem"
+  name                        = "kvsystemCPE"
   location                    = azurerm_resource_group.rg_system.location
   resource_group_name         = azurerm_resource_group.rg_system.name
   enabled_for_disk_encryption = true
@@ -142,7 +142,7 @@ resource "azurerm_key_vault" "kv_system" {
 # Keyvault For Confidentiel
 ##############################################################
 resource "azurerm_key_vault" "kv_confidentiel" {
-  name                        = "keyvaultprivconfidentiel"
+  name                        = "kvconfidentielCPE"
   location                    = azurerm_resource_group.rg_confidentiel.location
   resource_group_name         = azurerm_resource_group.rg_confidentiel.name
   enabled_for_disk_encryption = true
