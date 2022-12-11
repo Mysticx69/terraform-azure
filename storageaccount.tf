@@ -10,7 +10,8 @@ resource "azurerm_key_vault_key" "kvk" {
   key_opts        = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
   expiration_date = "2023-12-30T20:00:00Z"
   depends_on = [
-    azurerm_key_vault_access_policy.confidentiel
+    azurerm_key_vault_access_policy.confidentiel,
+    azurerm_key_vault_access_policy.storage
   ]
 }
 
@@ -18,8 +19,6 @@ resource "azurerm_key_vault_key" "kvk" {
 # Storage Account
 ##############################################################
 resource "azurerm_storage_account" "confidentiel_sg" {
-  # checkov:skip=CKV2_AZURE_1: ADD REASON
-  # checkov:skip=CKV2_AZURE_18: Not working
   name                     = "confidentielsg"
   resource_group_name      = azurerm_resource_group.rg_confidentiel.name
   location                 = azurerm_resource_group.rg_confidentiel.location
@@ -68,18 +67,18 @@ resource "azurerm_storage_account" "confidentiel_sg" {
   })
 }
 
-# ##############################################################
-# # Storage Account Customer Managed Key
-# ##############################################################
-# resource "azurerm_storage_account_customer_managed_key" "managed_key_good" {
-#   storage_account_id = azurerm_storage_account.confidentiel_sg.id
-#   key_vault_id       = azurerm_key_vault.kv_confidentiel.id
-#   key_name           = azurerm_key_vault_key.kvk.name
-#   depends_on = [
-#     azurerm_key_vault.kv_confidentiel,
-#     azurerm_key_vault_key.kvk
-#   ]
-# }
+##############################################################
+# Storage Account Customer Managed Key
+##############################################################
+resource "azurerm_storage_account_customer_managed_key" "cmk" {
+  storage_account_id = azurerm_storage_account.confidentiel_sg.id
+  key_vault_id       = azurerm_key_vault.kv_confidentiel.id
+  key_name           = azurerm_key_vault_key.kvk.name
+  depends_on = [
+    azurerm_key_vault.kv_confidentiel,
+    azurerm_key_vault_key.kvk
+  ]
+}
 
 
 ##############################################################
