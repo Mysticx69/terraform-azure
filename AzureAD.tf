@@ -12,6 +12,7 @@ resource "azuread_group" "it" {
   prevent_duplicate_names = true
   security_enabled        = true
   assignable_to_role      = true
+
   members = [azuread_user.jcive.object_id,
     azuread_user.scroche.object_id,
   azuread_user.hbonisseur.object_id]
@@ -102,7 +103,6 @@ resource "azuread_user" "hbonisseur" {
   force_password_change = true
   usage_location        = "FR"
 }
-
 
 ##############################################################
 # Administratif Users

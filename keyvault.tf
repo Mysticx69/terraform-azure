@@ -9,6 +9,7 @@ resource "azurerm_key_vault_access_policy" "confidentiel" {
 
   key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
+
   depends_on = [
     azurerm_key_vault.kv_confidentiel
   ]
@@ -25,6 +26,7 @@ resource "azurerm_key_vault_access_policy" "system" {
 
   key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
+
   depends_on = [
     azurerm_key_vault.kv_system
   ]
@@ -40,11 +42,13 @@ resource "azurerm_key_vault_access_policy" "it_confidentiel" {
 
   key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
+
   depends_on = [
     azurerm_key_vault.kv_system,
     azurerm_key_vault.kv_confidentiel
   ]
 }
+
 ##############################################################
 # Key Vault Policy Group IT - System
 ##############################################################
@@ -55,6 +59,7 @@ resource "azurerm_key_vault_access_policy" "it_system" {
 
   key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
+
   depends_on = [
     azurerm_key_vault.kv_system,
     azurerm_key_vault.kv_confidentiel
@@ -71,6 +76,7 @@ resource "azurerm_key_vault_access_policy" "administratif_system" {
 
   key_permissions    = ["Get", "Create", "Delete", "List"]
   secret_permissions = ["Get"]
+
   depends_on = [
     azurerm_key_vault.kv_system,
     azurerm_key_vault.kv_confidentiel
@@ -87,6 +93,7 @@ resource "azurerm_key_vault_access_policy" "administratif_confidentiel" {
 
   key_permissions    = ["Get", "Create", "Delete", "List"]
   secret_permissions = ["Get"]
+
   depends_on = [
     azurerm_key_vault.kv_system,
     azurerm_key_vault.kv_confidentiel

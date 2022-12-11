@@ -52,7 +52,6 @@ resource "azurerm_network_interface" "mainconfidentiel" {
   })
 }
 
-
 ##############################################################
 # Virtual Machine Windows Server 2019 => System subnet
 ##############################################################
@@ -97,9 +96,9 @@ resource "azurerm_virtual_machine" "bastion_vm" {
   })
 }
 
-# ##############################################################
-# # Virtual Machine Extension
-# ##############################################################
+################################################################
+# Virtual Machine Extension
+################################################################
 resource "azurerm_virtual_machine_extension" "extension_bastion_vm" {
   name                       = "bastion_vm"
   virtual_machine_id         = azurerm_virtual_machine.bastion_vm.id
@@ -171,9 +170,9 @@ resource "azurerm_virtual_machine" "vmconfidentiel" {
   })
 }
 
-# ##############################################################
-# # Virtual Machine Extension
-# ##############################################################
+################################################################
+# Virtual Machine Extension
+################################################################
 resource "azurerm_virtual_machine_extension" "extension_vmconfidentiel" {
   name                       = "vmconfidentiel"
   virtual_machine_id         = azurerm_virtual_machine.vmconfidentiel.id

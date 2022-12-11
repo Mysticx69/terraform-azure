@@ -3,7 +3,7 @@
 ##############################################################
 resource "azurerm_key_vault_key" "kvk" {
   # checkov:skip=CKV_AZURE_112:  No HSM
-  name            = "tfex-key"
+  name            = "StorageAccount-Key"
   key_vault_id    = azurerm_key_vault.kv_confidentiel.id
   key_type        = "RSA"
   key_size        = 2048
@@ -79,7 +79,6 @@ resource "azurerm_storage_account_customer_managed_key" "cmk" {
     azurerm_key_vault_key.kvk
   ]
 }
-
 
 ##############################################################
 # Storage Share
