@@ -10,7 +10,7 @@ resource "azurerm_key_vault_access_policy" "confidentiel" {
   key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
   depends_on = [
-    azurerm_key_vault.kv_system
+    azurerm_key_vault.kv_confidentiel
   ]
 }
 
@@ -26,9 +26,73 @@ resource "azurerm_key_vault_access_policy" "system" {
   key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
   depends_on = [
+    azurerm_key_vault.kv_system
+  ]
+}
+
+##############################################################
+# Key Vault Policy Group IT - Confidentiel
+##############################################################
+resource "azurerm_key_vault_access_policy" "it_confidentiel" {
+  key_vault_id = azurerm_key_vault.kv_confidentiel.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azuread_group.it.object_id
+
+  key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
+  secret_permissions = ["Get"]
+  depends_on = [
+    azurerm_key_vault.kv_system,
     azurerm_key_vault.kv_confidentiel
   ]
 }
+##############################################################
+# Key Vault Policy Group IT - System
+##############################################################
+resource "azurerm_key_vault_access_policy" "it_system" {
+  key_vault_id = azurerm_key_vault.kv_system.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azuread_group.it.object_id
+
+  key_permissions    = ["Get", "Create", "Delete", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
+  secret_permissions = ["Get"]
+  depends_on = [
+    azurerm_key_vault.kv_system,
+    azurerm_key_vault.kv_confidentiel
+  ]
+}
+
+##############################################################
+# Key Vault Policy Group Administratif - System
+##############################################################
+resource "azurerm_key_vault_access_policy" "administratif_system" {
+  key_vault_id = azurerm_key_vault.kv_system.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azuread_group.administratif.object_id
+
+  key_permissions    = ["Get", "Create", "Delete", "List"]
+  secret_permissions = ["Get"]
+  depends_on = [
+    azurerm_key_vault.kv_system,
+    azurerm_key_vault.kv_confidentiel
+  ]
+}
+
+##############################################################
+# Key Vault Policy Group Administratif - Confidentiel
+##############################################################
+resource "azurerm_key_vault_access_policy" "administratif_confidentiel" {
+  key_vault_id = azurerm_key_vault.kv_confidentiel.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azuread_group.administratif.object_id
+
+  key_permissions    = ["Get", "Create", "Delete", "List"]
+  secret_permissions = ["Get"]
+  depends_on = [
+    azurerm_key_vault.kv_system,
+    azurerm_key_vault.kv_confidentiel
+  ]
+}
+
 
 
 ##############################################################
