@@ -23,7 +23,7 @@ resource "azurerm_resource_group" "rg_confidentiel" {
 # Log Analytics Workspace
 ##############################################################
 resource "azurerm_log_analytics_workspace" "wsc" {
-  name                = "Workspace_confidentiel"
+  name                = "WorkspaceConfidentiel"
   location            = azurerm_resource_group.rg_confidentiel.location
   resource_group_name = azurerm_resource_group.rg_confidentiel.name
   sku                 = "PerGB2018"
@@ -31,7 +31,7 @@ resource "azurerm_log_analytics_workspace" "wsc" {
 }
 
 resource "azurerm_log_analytics_workspace" "wss" {
-  name                = "Workspace_system"
+  name                = "WorkspaceSystem"
   location            = azurerm_resource_group.rg_system.location
   resource_group_name = azurerm_resource_group.rg_system.name
   sku                 = "PerGB2018"
