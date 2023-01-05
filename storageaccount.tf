@@ -19,12 +19,13 @@ resource "azurerm_key_vault_key" "kvk" {
 # Storage Account
 ##############################################################
 resource "azurerm_storage_account" "confidentiel_sg" {
-  name                     = "confidentielsg"
-  resource_group_name      = azurerm_resource_group.rg_confidentiel.name
-  location                 = azurerm_resource_group.rg_confidentiel.location
-  account_tier             = "Standard"
-  account_replication_type = "GRS"
-  min_tls_version          = "TLS1_2"
+  name                              = "confidentielsg"
+  resource_group_name               = azurerm_resource_group.rg_confidentiel.name
+  location                          = azurerm_resource_group.rg_confidentiel.location
+  account_tier                      = "Standard"
+  account_replication_type          = "GRS"
+  min_tls_version                   = "TLS1_2"
+  infrastructure_encryption_enabled = true
 
   identity {
     type = "SystemAssigned"
@@ -55,19 +56,23 @@ resource "azurerm_storage_account" "confidentiel_sg" {
     }
   }
 
-  network_rules {
-    default_action             = "Deny"
-    bypass                     = ["AzureServices"]
-    ip_rules                   = ["0.0.0.0/0"]
-    virtual_network_subnet_ids = [azurerm_subnet.confidentiel1.id, azurerm_subnet.confidentiel2.id]
-  }
-
   tags = merge(local.tags, {
     description = "Confidentiel Storage Account"
   })
 }
 
 ##############################################################
+# Storage Account Network Rules
+##############################################################
+resource "azurerm_storage_account_network_rules" "sg" {
+  storage_account_id         = azurerm_storage_account.confidentiel_sg.id
+  default_action             = "Deny"
+  bypass                     = ["AzureServices"]
+  ip_rules                   = ["0.0.0.0/0"]
+  virtual_network_subnet_ids = [azurerm_subnet.confidentiel1.id, azurerm_subnet.confidentiel2.id]
+}
+
+#############################################################
 # Storage Account Customer Managed Key
 ##############################################################
 resource "azurerm_storage_account_customer_managed_key" "cmk" {
@@ -79,6 +84,17 @@ resource "azurerm_storage_account_customer_managed_key" "cmk" {
     azurerm_key_vault_key.kvk
   ]
 }
+
+##############################################################
+# Storage Account Encryption Scope
+##############################################################
+resource "azurerm_storage_encryption_scope" "example" {
+  name               = "customer-managed"
+  storage_account_id = azurerm_storage_account.confidentiel_sg.id
+  source             = "Microsoft.KeyVault"
+  key_vault_key_id   = azurerm_key_vault_key.kvk.id
+}
+
 
 ##############################################################
 # Storage Share
@@ -97,3 +113,6 @@ resource "azurerm_storage_share" "confidentiel_ss" {
     }
   }
 }
+
+
+
