@@ -89,7 +89,7 @@ resource "azurerm_storage_account_customer_managed_key" "cmk" {
 # Storage Account Encryption Scope
 ##############################################################
 resource "azurerm_storage_encryption_scope" "cmk" {
-  name               = "customer-managed"
+  name               = "customerManaged"
   storage_account_id = azurerm_storage_account.confidentiel_sg.id
   source             = "Microsoft.KeyVault"
   key_vault_key_id   = azurerm_key_vault_key.kvk.id
