@@ -162,3 +162,41 @@ resource "azurerm_key_vault" "kv_confidentiel" {
     name = "KeyVault Confidentiel"
   })
 }
+
+##############################################################
+# Keyvault Logs System
+##############################################################
+resource "azurerm_monitor_diagnostic_setting" "log_system" {
+  name                       = "diagnostic-setting-system"
+  target_resource_id         = azurerm_key_vault.kv_system.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.wss.id
+
+  log {
+    category = "AuditEvent"
+    enabled  = true
+  }
+
+  metric {
+    category = "AllMetrics"
+    enabled  = true
+  }
+}
+
+##############################################################
+# Keyvault Logs Confidentiel
+##############################################################
+resource "azurerm_monitor_diagnostic_setting" "log_confidentiel" {
+  name                       = "diagnostic-setting-confidentiel"
+  target_resource_id         = azurerm_key_vault.kv_confidentiel.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.wsc.id
+
+  log {
+    category = "AuditEvent"
+    enabled  = true
+  }
+
+  metric {
+    category = "AllMetrics"
+    enabled  = true
+  }
+}
