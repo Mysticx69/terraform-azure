@@ -66,6 +66,7 @@ resource "azurerm_virtual_machine" "bastion_vm" {
   delete_data_disks_on_termination = true
 
 
+
   storage_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
@@ -80,7 +81,7 @@ resource "azurerm_virtual_machine" "bastion_vm" {
   }
 
   os_profile_windows_config {
-    enable_automatic_upgrades = false
+    enable_automatic_upgrades = true
     provision_vm_agent        = true
   }
 
@@ -125,6 +126,14 @@ resource "azurerm_virtual_machine_extension" "extension_bastion_vm" {
 SETTINGS
 }
 
+resource "azurerm_virtual_machine_extension" "extension_bastion_vm_guest" {
+  name                       = "AzurePolicyforWindows"
+  virtual_machine_id         = azurerm_virtual_machine.bastion_vm.id
+  publisher                  = "Microsoft.GuestConfiguration"
+  type                       = "ConfigurationforWindows"
+  type_handler_version       = "1.0"
+  auto_upgrade_minor_version = "true"
+}
 
 ##############################################################
 # Virtual Machine Windows Server 2019 => confidentiel subnet
@@ -154,7 +163,7 @@ resource "azurerm_virtual_machine" "vmconfidentiel" {
   }
 
   os_profile_windows_config {
-    enable_automatic_upgrades = false
+    enable_automatic_upgrades = true
     provision_vm_agent        = true
   }
 
@@ -197,4 +206,13 @@ resource "azurerm_virtual_machine_extension" "extension_vmconfidentiel" {
             }
     }
 SETTINGS
+}
+
+resource "azurerm_virtual_machine_extension" "extension_vmconfidentiel_guest" {
+  name                       = "AzurePolicyforWindows"
+  virtual_machine_id         = azurerm_virtual_machine.vmconfidentiel.id
+  publisher                  = "Microsoft.GuestConfiguration"
+  type                       = "ConfigurationforWindows"
+  type_handler_version       = "1.0"
+  auto_upgrade_minor_version = "true"
 }
