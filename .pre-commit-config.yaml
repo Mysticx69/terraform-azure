@@ -3,8 +3,6 @@ repos:
     rev: v1.77.0
     hooks:
       - id: checkov
-        verbose: true
-        args: [--soft-fail]
       - id: terraform_fmt
       - id: terraform_docs
       - id: terraform_tflint
