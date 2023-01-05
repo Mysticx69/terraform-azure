@@ -132,7 +132,6 @@ resource "azurerm_key_vault" "kv_system" {
     ip_rules                   = ["0.0.0.0/0"]
   }
 
-
   tags = merge(local.tags, {
     name = "KeyVault System"
   })
